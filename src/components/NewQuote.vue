@@ -1,14 +1,14 @@
 <template>
     <div class="row">
-       <form>
+        <form>
             <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-md-6 col-md-offset-3 form-group">
-                <label for="t">Quote</label>
-                <textarea id="t" rows="3" v-model="quote"></textarea>
+                <label>Quote</label>
+                <textarea class="form-control" rows="3" v-model="quote"></textarea>
             </div>
             <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-md-6 col-md-offset-3 form-group">
-                <button class="btn btn-primary" @click.prevent="CreateNew">Add Quote</button>
+               <button class="btn btn-primary" @click.prevent="CreateNew">Add Quote</button>
             </div>
-       </form>
+        </form>
     </div>
 </template>
 
