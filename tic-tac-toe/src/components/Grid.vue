@@ -1,7 +1,10 @@
 <template>
     <div>
+        <div class="gameStatus" :class="gameStatusColor">
+            {{ gameStatusMessage }}
+        </div>
         <div class="grid">
-            <cell v-for="n in 9" :key="n"></cell>
+            <cell v-for="n in 9" :key="n" :marker="n"></cell>
         </div>
     </div>
 </template>
@@ -9,21 +12,40 @@
 <script>
 
 import Cell from './Cell.vue';
+import EventBus from '../eventBus.js';
 
 export default {
+    name: 'Grid',
     components: {
         Cell
     },
+    created(){
+        EventBus.$on('shot', cellNumver => {
+            this.cells[cellNumver] = this.activePlayer;
+            this.moves++;
+            // this.gameStatus = this.changeGameStatus();
+        });
+    },
     data(){
         return {
-            matches: 0,
-            wins: {
-                O: 0,
-                X: 0
-            },
-            
+            activePlayer: 'O',
+            gameStatus: 'turn',
+            gameStatusMessage: "O's turn",
+            gameStatusColor: 'statusTurn',
+            moves: 0,
+            winConditions: [
+              [1, 2, 3], [4, 5, 6], [7, 8, 9], //rows
+              [1, 4, 7], [2, 5, 8], [3, 6, 9], //columns
+              [1, 5, 9], [3, 5, 7] //diagonals
+            ],
+            cells: {
+              1: '', 2: '', 3: '',
+              4: '', 5: '', 6: '',
+              7: '', 8: '', 9: '' 
+            }
         }
-    }
+    },
+
 }
 </script>
 
@@ -38,5 +60,22 @@ export default {
     padding: 10px;
     color: white;
     box-sizing: border-box;
+}
+.statusTurn {
+    background-color: #ffc107;
+}
+.statusWin {
+    background-color: #8bc34a;
+}
+.statusDraw {
+    background-color: #dedede;
+}
+.gameStatus{
+    padding: 20px 0;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    font-size: 2em;
+    font-weight: 800;
+    color: white;
 }
 </style>

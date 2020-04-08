@@ -1,16 +1,27 @@
 <template>
-    <div class="cell">
-        
+    <div class="cell" @click="shot">
+        {{ mark }}
     </div>
 </template>
 
 <script>
+import EventBus from '../eventBus.js';
 export default {
     name: "cell",
+    props: ['marker'],
     data(){
         return {
             mark: '',
-            canPlaceMark: false
+            canPlaceMark: true
+        }
+    },
+    methods: {
+        shot(){
+            if(this.canPlaceMark){
+                this.mark = this.$parent.activePlayer;
+                this.canPlaceMark = false;
+                EventBus.$emit('shot', this.marker);
+            }
         }
     }
 }
