@@ -1,22 +1,29 @@
 <template>
     <div>
         <div class="grid">
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
+            <cell v-for="n in 9" :key="n"></cell>
         </div>
     </div>
 </template>
 
 <script>
+
+import Cell from './Cell.vue';
+
 export default {
-    
+    components: {
+        Cell
+    },
+    data(){
+        return {
+            matches: 0,
+            wins: {
+                O: 0,
+                X: 0
+            },
+            
+        }
+    }
 }
 </script>
 
@@ -29,19 +36,7 @@ export default {
     width: 100%;
     position: relative;
     padding: 10px;
+    color: white;
     box-sizing: border-box;
-}
-
-.cell {
-    height: 120px;
-    line-height: 120px;
-    font-size: 3.5em;
-    background-color: #2c3e50;
-    font-family: 'Permanent Marker', cursive;
-}
-
-.cell:hover {
-    background-color: #405971;
-    cursor: pointer;
 }
 </style>
