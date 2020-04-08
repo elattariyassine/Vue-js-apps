@@ -28,6 +28,10 @@ export default {
         EventBus.$on('freeze', () => {
             this.canPlaceMark = false;
         });
+        EventBus.$on('clearCells', () => { 
+            this.mark = '';
+            this.canPlaceMark = true;
+        });
     }
 }
 </script>
