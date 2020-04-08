@@ -23,6 +23,11 @@ export default {
                 EventBus.$emit('shot', this.marker);
             }
         }
+    },
+    created(){
+        EventBus.$on('freeze', () => {
+            this.canPlaceMark = false;
+        });
     }
 }
 </script>

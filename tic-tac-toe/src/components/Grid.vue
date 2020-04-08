@@ -23,7 +23,7 @@ export default {
         EventBus.$on('shot', cellNumver => {
             this.cells[cellNumver] = this.activePlayer;
             this.moves++;
-            // this.gameStatus = this.changeGameStatus();
+            this.gameStatus = this.changeGameStatus();
         });
     },
     data(){
@@ -45,6 +45,61 @@ export default {
             }
         }
     },
+    methods : {
+        changePlayer(){
+            this.activePlayer = this.nonActivePlayer;
+            this.gameStatusMessage = this.activePlayer + "'s turn";
+        },
+        checkForWin(){
+            let cells = this.cells;
+            return this.winConditions.some(condition => {
+                let count = 0;
+                condition.forEach(cell => {
+                    if (cells[cell] === this.activePlayer){
+                        count++;
+                    }
+                });
+                if(count === 3){
+                    return true;
+                }
+                return false;
+            });
+        },
+        gameIsWon(){
+            EventBus.$emit('win', this.activePlayer);
+            this.gameStatusMessage = this.activePlayer + ' wins';
+            EventBus.$emit('freeze');
+            return 'win';
+        },
+        changeGameStatus(){
+            if (this.checkForWin()){
+                return this.gameIsWon();
+            }else if (this.moves == 9){
+                return 'draw';
+            }
+            this.changePlayer();
+            return 'turn'; 
+        }
+    },
+    computed: {
+        nonActivePlayer(){
+            if (this.activePlayer == 'O'){
+                return 'X';
+            }
+            return  'O';
+        }
+    },
+    watch: {
+        gameStatus(){
+            if(this.gameStatus == 'win'){
+                this.gameStatusColor = 'statusWin';
+            }
+            else if(this.gameStatus == 'draw'){
+                this.gameStatusColor = 'statusDraw';
+                this.gameStatusMessage = 'There is no winner';
+            }
+        }
+    }
 
 }
 </script>
