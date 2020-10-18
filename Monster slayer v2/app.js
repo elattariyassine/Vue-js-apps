@@ -57,12 +57,12 @@ const app = Vue.createApp({
         this.logs.push({
           id: Math.random() * 1000,
           isPlayer: true,
-          message: `You dealts ${monsterDamageTaken}% damage`,
+          message: `You did ${monsterDamageTaken}% damage`,
         });
         this.logs.push({
           id: Math.random() * 1000,
           isPlayer: false,
-          message: `Monster dealts ${playerHealthTaken}% damage`,
+          message: `Monster hits ${playerHealthTaken}% damage`,
         });
       } else {
         this.logs.push({
