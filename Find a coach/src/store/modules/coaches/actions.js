@@ -9,8 +9,9 @@ export default {
       hourlyRate: data.rate,
       areas: data.areas
     };
+    const token = context.rootGetters.token;
     const response = await fetch(
-      `https://find-coach-vue.firebaseio.com/coaches/${userId}.json`,
+      `https://find-coach-vue.firebaseio.com/coaches/${userId}.json?auth=${token}`,
       {
         method: 'PUT',
         body: JSON.stringify(coachData)
